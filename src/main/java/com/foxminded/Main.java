@@ -16,7 +16,6 @@ public class Main {
 //    String end = scan.nextLine();
 //    streamer.compute(start, end);
     streamer.compute("start.log", "end.log");
-        String start = "hello";
-    System.out.print(start.substring(start.indexOf('l')));
+
     }
 }
