@@ -1,21 +1,20 @@
 package com.foxminded;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner scan = new Scanner(System.in);
-    streamer streamer = new streamer();
+    TimeCounter timeCounter = new TimeCounter();
 //    System.out.println("please enter your log names");
 //    System.out.print("start log name ---->");
 //    String start = scan.nextLine();
 //    System.out.print("end log name   ---->");
 //    String end = scan.nextLine();
 //    streamer.compute(start, end);
-    streamer.compute("start.log", "end.log");
+    System.out.println(timeCounter.compute("start.log", "end.log" , "abbreviations.txt"));
 
     }
 }
