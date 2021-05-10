@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 public class TimeCounter {
 
+    List<Racer> collect = new ArrayList<>();
+
     private static final int ABBREVIATIONS_LENGTH = 3;
     private static final int SIZE_OF_WINNERS_TABLE = 15;
     private static final String FORMULA_FOR_SIZE_LINE = "%-26s";
@@ -52,6 +54,7 @@ public class TimeCounter {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < startTime.size(); i++) {
             result.add(startTime.get(i).substring(0, ABBREVIATIONS_LENGTH) + time(startTime.get(i), endTime.get(i)));
+            collect.add(new Racer().setName();)
         }
         sort(result);
         return viewMaker(result, abbreviations).toString();
