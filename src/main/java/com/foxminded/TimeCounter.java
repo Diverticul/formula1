@@ -64,13 +64,13 @@ public class TimeCounter {
 
     private StringBuilder viewMaker() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < collect.size(); i++) {
-            String pilotName = String.format(FORMULA_FOR_SIZE_LINE, i + 1 + DESIRED_DELIMITER + collect.get(i).getName());
-            String pilotCar = String.format(FORMULA_FOR_SIZE_LINE, DESIRED_DELIMITER + collect.get(i).getCarModel());
-            if (i == SIZE_OF_WINNERS_TABLE) {
+        for (int counter = 0; counter < collect.size(); counter++) {
+            String pilotName = String.format(FORMULA_FOR_SIZE_LINE, counter + 1 + DESIRED_DELIMITER + collect.get(counter).getName());
+            String pilotCar = String.format(FORMULA_FOR_SIZE_LINE, DESIRED_DELIMITER + collect.get(counter).getCarModel());
+            if (counter == SIZE_OF_WINNERS_TABLE) {
                 result.append(Stream.generate(() -> String.valueOf('-')).limit(result.indexOf(NEW_LINE_SYMBOL)).collect(Collectors.joining())).append(NEW_LINE_SYMBOL);
             }
-            result.append(pilotName).append(pilotCar).append(DESIRED_DELIMITER).append(collect.get(i).getTime()).append(NEW_LINE_SYMBOL);
+            result.append(pilotName).append(pilotCar).append(DESIRED_DELIMITER).append(collect.get(counter).getTime()).append(NEW_LINE_SYMBOL);
         }
         return result;
     }
