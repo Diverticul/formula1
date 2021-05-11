@@ -54,7 +54,7 @@ public class TimeCounter {
             Racer racer = new Racer();
             String nameAndModelCar = abbreviations.get(i).substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length());
             racer.setName(nameAndModelCar.substring(0, nameAndModelCar.indexOf(EXISTING_DELIMITER)));
-            racer.setTime(time(startTime.get(i), endTime.get(i)));
+            racer.setTime(timeCounter(startTime.get(i), endTime.get(i)));
             racer.setCarModel(nameAndModelCar.substring(nameAndModelCar.indexOf(EXISTING_DELIMITER) + EXISTING_DELIMITER.length()));
             collect.add(racer);
         }
@@ -75,7 +75,7 @@ public class TimeCounter {
         return result;
     }
 
-    private String time(String startInput, String endInput) {
+    private String timeCounter(String startInput, String endInput) {
         SimpleDateFormat inputFormat = new SimpleDateFormat(INPUT_DATE_FORMAT);
         Date startDate = new Date();
         Date endDate = new Date();
