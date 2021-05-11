@@ -1,6 +1,5 @@
 package com.foxminded;
 
-
 import java.io.*;
 import java.net.URL;
 import java.text.ParseException;
@@ -25,11 +24,11 @@ public class TimeCounter {
 
     List<Racer> collect = new ArrayList<>();
 
-    public String compute(String nameOfStartLogFile, String nameOfEndLogFile, String nameOfFileWithAbbreviations) throws FileNotFoundException {
+    public String compute(String nameOfStartLogFile, String nameOfEndLogFile, String nameOfFileWithAbbreviations) throws IOException {
         return match(reader(nameOfStartLogFile), reader(nameOfEndLogFile), reader(nameOfFileWithAbbreviations));
     }
 
-    private List<String> reader(String fileName) throws FileNotFoundException {
+    private List<String> reader(String fileName) throws IOException {
         if (fileName == null) {
             throw new IllegalArgumentException();
         }
@@ -37,12 +36,12 @@ public class TimeCounter {
         if (resourceUrl == null) {
             throw new FileNotFoundException();
         }
-        List<String> result = new ArrayList<>();
+        List<String> result;
         try (FileReader fileReader = new FileReader(resourceUrl.getFile());
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             result = bufferedReader.lines().collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         }
         return result;
     }
@@ -53,10 +52,10 @@ public class TimeCounter {
         Collections.sort(abbreviations);
         for (int i = 0; i < startTime.size(); i++) {
             Racer racer = new Racer();
-            String fullname = abbreviations.get(i).substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length());
-            racer.setName(fullname.substring(0, fullname.indexOf(EXISTING_DELIMITER)));
+            String nameAndModelCar = abbreviations.get(i).substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length());
+            racer.setName(nameAndModelCar.substring(0, nameAndModelCar.indexOf(EXISTING_DELIMITER)));
             racer.setTime(time(startTime.get(i), endTime.get(i)));
-            racer.setCarModel(fullname.substring(fullname.indexOf(EXISTING_DELIMITER) + EXISTING_DELIMITER.length()));
+            racer.setCarModel(nameAndModelCar.substring(nameAndModelCar.indexOf(EXISTING_DELIMITER) + EXISTING_DELIMITER.length()));
             collect.add(racer);
         }
         sort(collect);
@@ -65,7 +64,7 @@ public class TimeCounter {
 
     private StringBuilder viewMaker() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i <collect.size() ; i++) {
+        for (int i = 0; i < collect.size(); i++) {
             String pilotName = String.format(FORMULA_FOR_SIZE_LINE, i + 1 + DESIRED_DELIMITER + collect.get(i).getName());
             String pilotCar = String.format(FORMULA_FOR_SIZE_LINE, DESIRED_DELIMITER + collect.get(i).getCarModel());
             if (i == SIZE_OF_WINNERS_TABLE) {
@@ -90,7 +89,6 @@ public class TimeCounter {
         Date result = new Date(resultTime);
         SimpleDateFormat outputFormat = new SimpleDateFormat(DESERVE_DATE_FORMAT);
         outputFormat.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-
         return outputFormat.format(result);
     }
 

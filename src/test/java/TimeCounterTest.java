@@ -2,6 +2,7 @@ import com.foxminded.TimeCounter;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,7 +11,7 @@ class TimeCounterTest {
     private final TimeCounter timeCounter = new TimeCounter();
 
     @Test
-    void nullTest() throws FileNotFoundException {
+    void nullTest() throws IOException {
         try {
             timeCounter.compute(null, "gdgd" , null);
             fail("Expected exception not thrown");
@@ -20,7 +21,7 @@ class TimeCounterTest {
     }
 
     @Test
-    void wrongNameFile(){
+    void wrongNameFile() throws  IOException{
         try {
             timeCounter.compute("wrongName", "end.log", "wrongname2.txt");
             fail("Expected exception not thrown");
@@ -30,7 +31,7 @@ class TimeCounterTest {
     }
 
     @Test
-    void inputTest() throws FileNotFoundException {
+    void inputTest() throws IOException {
         String expected = """
                 1|Sebastian Vettel         |FERRARI                   |01:04.415
                 2|Daniel Ricciardo         |RED BULL RACING TAG HEUER |01:12.013
