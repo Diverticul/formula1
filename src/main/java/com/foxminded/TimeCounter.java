@@ -12,11 +12,9 @@ import java.util.stream.Stream;
 
 public class TimeCounter {
 
-    List<Racer> collect = new ArrayList<>();
-
     private static final int ABBREVIATIONS_LENGTH = 3;
     private static final int SIZE_OF_WINNERS_TABLE = 15;
-    private static final String FORMULA_FOR_SIZE_LINE = "%-26s";
+    private static final String FORMULA_FOR_SIZE_LINE = "%-27s";
     private static final String RIDERS_SORTING_FORMULA = "\\D";
     private static final String INPUT_DATE_FORMAT = "yyyy-MM-dd_HH:mm:ss.SSS";
     private static final String DESERVE_DATE_FORMAT = "mm:ss.SSS";
@@ -24,6 +22,8 @@ public class TimeCounter {
     private static final String EXISTING_DELIMITER = "_";
     private static final String DESIRED_DELIMITER = "|";
     private static final String TIME_ZONE = "GMT";
+
+    List<Racer> collect = new ArrayList<>();
 
     public String compute(String nameOfStartLogFile, String nameOfEndLogFile, String nameOfFileWithAbbreviations) throws FileNotFoundException {
         return match(reader(nameOfStartLogFile), reader(nameOfEndLogFile), reader(nameOfFileWithAbbreviations));
@@ -51,27 +51,27 @@ public class TimeCounter {
         Collections.sort(startTime);
         Collections.sort(endTime);
         Collections.sort(abbreviations);
-        List<String> result = new ArrayList<>();
         for (int i = 0; i < startTime.size(); i++) {
-            result.add(startTime.get(i).substring(0, ABBREVIATIONS_LENGTH) + time(startTime.get(i), endTime.get(i)));
-            collect.add(new Racer().setName();)
+            Racer racer = new Racer();
+            String fullname = abbreviations.get(i).substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length());
+            racer.setName(fullname.substring(0, fullname.indexOf(EXISTING_DELIMITER)));
+            racer.setTime(time(startTime.get(i), endTime.get(i)));
+            racer.setCarModel(fullname.substring(fullname.indexOf(EXISTING_DELIMITER) + EXISTING_DELIMITER.length()));
+            collect.add(racer);
         }
-        sort(result);
-        return viewMaker(result, abbreviations).toString();
+        sort(collect);
+        return viewMaker().toString();
     }
 
-    private StringBuilder viewMaker(List<String> lapTimesList, List<String> abbreviations) {
+    private StringBuilder viewMaker() {
         StringBuilder result = new StringBuilder();
-        Iterator<String> lapTimeIterator = lapTimesList.iterator();
-        for (int counter = 1; counter < lapTimesList.size() + 1; counter++) {
-            if (lapTimeIterator.hasNext()) {
-                String lapTime = lapTimeIterator.next();
-                for (String fullName : abbreviations) {
-                    if (lapTime.substring(0, ABBREVIATIONS_LENGTH).equals(fullName.substring(0, ABBREVIATIONS_LENGTH))) {
-                        result.append(connector(fullName, lapTime, counter)).append(NEW_LINE_SYMBOL);
-                    }
-                }
+        for (int i = 0; i <collect.size() ; i++) {
+            String pilotName = String.format(FORMULA_FOR_SIZE_LINE, i + 1 + DESIRED_DELIMITER + collect.get(i).getName());
+            String pilotCar = String.format(FORMULA_FOR_SIZE_LINE, DESIRED_DELIMITER + collect.get(i).getCarModel());
+            if (i == SIZE_OF_WINNERS_TABLE) {
+                result.append(Stream.generate(() -> String.valueOf('-')).limit(result.indexOf(NEW_LINE_SYMBOL)).collect(Collectors.joining())).append(NEW_LINE_SYMBOL);
             }
+            result.append(pilotName).append(pilotCar).append(DESIRED_DELIMITER).append(collect.get(i).getTime()).append(NEW_LINE_SYMBOL);
         }
         return result;
     }
@@ -95,22 +95,10 @@ public class TimeCounter {
     }
 
 
-    private String connector(String fullName, String time, int counter) {
-        String[] nameAndCar = fullName.substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length()).split(EXISTING_DELIMITER);
-        String pilotName = String.format(FORMULA_FOR_SIZE_LINE, counter + DESIRED_DELIMITER + nameAndCar[0]);
-        String pilotCar = String.format(FORMULA_FOR_SIZE_LINE, nameAndCar[1]);
-        StringBuilder result = new StringBuilder(String.join(DESIRED_DELIMITER, pilotName, pilotCar, time.substring(ABBREVIATIONS_LENGTH)));
-        if (counter == SIZE_OF_WINNERS_TABLE) {
-            result.append(NEW_LINE_SYMBOL).append(Stream.generate(() -> String.valueOf('-')).limit((long) result.length() - NEW_LINE_SYMBOL.length()).collect(Collectors.joining()));
-        }
-        return result.toString();
-    }
-
-
-    private void sort(List<String> strings) {
-        strings.sort(new Comparator<String>() {
-            public int compare(String firstString, String secondString) {
-                return extractInt(firstString) - extractInt(secondString);
+    private void sort(List<Racer> strings) {
+        strings.sort(new Comparator<Racer>() {
+            public int compare(Racer firstString, Racer secondString) {
+                return extractInt(firstString.getTime()) - extractInt(secondString.getTime());
             }
 
             int extractInt(String line) {
@@ -121,4 +109,5 @@ public class TimeCounter {
 
 
     }
+
 }

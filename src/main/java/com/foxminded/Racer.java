@@ -1,15 +1,23 @@
 package com.foxminded;
 
 public class Racer {
-    private int time ;
+    private String time;
     private String name;
+    private String carModel;
 
+    public String getCarModel() {
+        return carModel;
+    }
 
-    public int getTime() {
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
+    }
+
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -20,4 +28,5 @@ public class Racer {
     public void setName(String name) {
         this.name = name;
     }
+
 }
