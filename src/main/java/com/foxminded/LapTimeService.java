@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
-public class TimeCounter {
+public class LapTimeService {
 
     private static final int ABBREVIATIONS_LENGTH = 3;
     private static final int SIZE_OF_WINNERS_TABLE = 15;
@@ -34,6 +34,7 @@ public class TimeCounter {
         }
         URL resourceUrl = getClass().getClassLoader().getResource(fileName);
         if (resourceUrl == null) {
+
             throw new FileNotFoundException();
         }
         List<String> result;
@@ -54,7 +55,7 @@ public class TimeCounter {
             Racer racer = new Racer();
             String nameAndModelCar = abbreviations.get(i).substring(ABBREVIATIONS_LENGTH + EXISTING_DELIMITER.length());
             racer.setName(nameAndModelCar.substring(0, nameAndModelCar.indexOf(EXISTING_DELIMITER)));
-            racer.setTime(timeCounter(startTime.get(i), endTime.get(i)));
+            racer.setTime(lapTimeCounter(startTime.get(i), endTime.get(i)));
             racer.setCarModel(nameAndModelCar.substring(nameAndModelCar.indexOf(EXISTING_DELIMITER) + EXISTING_DELIMITER.length()));
             collect.add(racer);
         }
@@ -75,7 +76,7 @@ public class TimeCounter {
         return result;
     }
 
-    private String timeCounter(String startInput, String endInput) {
+    private String lapTimeCounter(String startInput, String endInput) {
         SimpleDateFormat inputFormat = new SimpleDateFormat(INPUT_DATE_FORMAT);
         Date startDate = new Date();
         Date endDate = new Date();

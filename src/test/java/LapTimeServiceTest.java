@@ -1,4 +1,4 @@
-import com.foxminded.TimeCounter;
+import com.foxminded.LapTimeService;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -6,27 +6,25 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TimeCounterTest {
+class LapTimeServiceTest {
 
-    private final TimeCounter timeCounter = new TimeCounter();
+    private final LapTimeService lapTimeService = new LapTimeService();
 
     @Test
     void nullTest() throws IOException {
         try {
-            timeCounter.compute(null, "gdgd" , null);
+            lapTimeService.compute(null, "gdgd" , null);
             fail("Expected exception not thrown");
         } catch (IllegalArgumentException nullObject) {
-            nullObject.printStackTrace();
         }
     }
 
     @Test
     void wrongNameFile() throws  IOException{
         try {
-            timeCounter.compute("wrongName", "end.log", "wrongname2.txt");
+            lapTimeService.compute("wrongName", "end.log", "wrongname2.txt");
             fail("Expected exception not thrown");
         } catch (FileNotFoundException exception){
-            exception.printStackTrace();
         }
     }
 
@@ -54,7 +52,7 @@ class TimeCounterTest {
                 18|Lance Stroll            |WILLIAMS MERCEDES         |01:13.323
                 19|Kevin Magnussen         |HAAS FERRARI              |01:13.393
                 """;
-        assertEquals(expected, timeCounter.compute("start.log", "end.log" , "abbreviations.txt"));
+        assertEquals(expected, lapTimeService.compute("start.log", "end.log" , "abbreviations.txt"));
     }
 
 }
