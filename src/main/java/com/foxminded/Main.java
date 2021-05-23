@@ -6,6 +6,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         LapTimeService timeCounter = new LapTimeService();
-        System.out.print(timeCounter.compute("start.log", "end.log", "abbreviations.txt"));
+        System.out.print(timeCounter.raceAnalyzer("start.log", "end.log", "abbreviations.txt"));
     }
 }

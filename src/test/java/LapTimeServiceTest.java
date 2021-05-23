@@ -13,7 +13,7 @@ class LapTimeServiceTest {
     @Test
     void nullTest() throws IOException {
         try {
-            lapTimeService.compute(null, "gdgd" , null);
+            lapTimeService.raceAnalyzer(null, "gdgd" , null);
             fail("Expected exception not thrown");
         } catch (IllegalArgumentException nullObject) {
         }
@@ -22,7 +22,7 @@ class LapTimeServiceTest {
     @Test
     void wrongNameFile() throws  IOException{
         try {
-            lapTimeService.compute("wrongName", "end.log", "wrongname2.txt");
+            lapTimeService.raceAnalyzer("wrongName", "end.log", "wrongname2.txt");
             fail("Expected exception not thrown");
         } catch (FileNotFoundException exception){
         }
@@ -52,7 +52,7 @@ class LapTimeServiceTest {
                 18|Lance Stroll            |WILLIAMS MERCEDES         |01:13.323
                 19|Kevin Magnussen         |HAAS FERRARI              |01:13.393
                 """;
-        assertEquals(expected, lapTimeService.compute("start.log", "end.log" , "abbreviations.txt"));
+        assertEquals(expected, lapTimeService.raceAnalyzer("start.log", "end.log" , "abbreviations.txt"));
     }
 
 }
