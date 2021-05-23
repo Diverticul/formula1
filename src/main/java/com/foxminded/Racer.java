@@ -1,7 +1,9 @@
 package com.foxminded;
 
-public class Racer {
-    private String time;
+import java.util.Date;
+
+public class Racer implements Comparable<Racer> {
+    private Date lapTime;
     private String name;
     private String carModel;
 
@@ -13,12 +15,12 @@ public class Racer {
         this.carModel = carModel;
     }
 
-    public String getTime() {
-        return time;
+    public Date getLapTime() {
+        return lapTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setLapTime(Date time) {
+        this.lapTime = time;
     }
 
     public String getName() {
@@ -29,4 +31,8 @@ public class Racer {
         this.name = name;
     }
 
+    @Override
+    public int compareTo(Racer o) {
+        return getLapTime().compareTo(o.getLapTime());
+    }
 }
