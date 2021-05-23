@@ -36,8 +36,7 @@ public class LapTimeService {
         }
         List<String> result;
         try (FileReader fileReader = new FileReader(resourceUrl.getFile());
-             BufferedReader bufferedReader = new BufferedReader(fileReader))
-        {
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             result = bufferedReader.lines().collect(Collectors.toList());
         } catch (IOException exception) {
             throw new IOException(" Reading (" + fileName + ") failed!");
@@ -83,9 +82,9 @@ public class LapTimeService {
             startLapTime = inputFormat.parse(startInput.substring(ABBREVIATIONS_LENGTH));
             endLapTime = inputFormat.parse(endInput.substring(ABBREVIATIONS_LENGTH));
         } catch (ParseException exception) {
-            throw new IllegalArgumentException(" wrong date format "+ exception.getLocalizedMessage());
+            throw new IllegalArgumentException(" wrong date format " + exception.getLocalizedMessage());
         }
-        return new Date (endLapTime.getTime() - startLapTime.getTime());
+        return new Date(endLapTime.getTime() - startLapTime.getTime());
     }
 
 }

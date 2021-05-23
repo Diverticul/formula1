@@ -24,7 +24,7 @@ class LapTimeServiceTest {
         try {
             lapTimeService.raceAnalyzer("wrongName", "end.log", "wrongname2.txt");
             fail("Expected exception not thrown");
-        } catch (FileNotFoundException exception){
+        } catch (FileNotFoundException exception) {
         }
     }
 
